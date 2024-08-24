@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices vs Monolith</title>
+    <style>
+        .service {
+            width: 150px;
+            height: 150px;
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            line-height: 150px;
+            color: white;
+            font-weight: bold;
+        }
+        .container {
+            padding: 5px;
+            border: 1px solid black;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .green {
+            background-color: green;
+        }
+        .red {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Microservices vs Monolith</h1>
+    <div id="monolith">
+        <h2>Monolith</h2>
+        <h3 id="monocost">Cost: Rs. 2000</h3>
+        <h3 id="monoscale">Scale factor: 2 CPUs</h3>
+        <div class="container">
+            <div id="monolith-ordering" class="service green">Ordering Service</div>
+            <div id="monolith-tracking" class="service green">Tracking Service</div>
+        </div>
+        <button onclick="increaseLoadMonolith('ordering')">1000 orders</button>
+        <button onclick="increaseLoadMonolith('tracking')">1000 delivery tracking</button>
+        <button onclick="increaseScaleMonolith()">Increase Scale</button>
+    </div>
+    <div id="microservices">
+        <h2>Microservices</h2>
+        <h3 id="microcost">Cost: Rs. 2000</h3>
+        <h3 id="microscale">Scale factor: 2 CPUs</h3>
+        <div class="container">
+            <div id="micro-ordering" class="service green">Ordering Service</div>
+        </div>
+        <div class="container">
+            <div id="micro-tracking" class="service green">Tracking Service</div>
+        </div>
+        <button onclick="increaseLoadMicro('ordering')">1000 orders</button>
+        <button onclick="increaseLoadMicro('tracking')">1000 delivery tracking</button>
+        <button onclick="increaseScaleMicro('ordering')">Increase Scale Ordering</button>
+        <button onclick="increaseScaleMicro('tracking')">Increase Scale Tracking</button>
+    </div>
+
+    <script>
+        let monolithScale = 1;
+        let monolithLoad = { ordering: 0, tracking: 0 };
+        let microScale = { ordering: 1, tracking: 1 };
+        let microLoad = { ordering: 0, tracking: 0 };
+
+        function increaseLoadMonolith(service) {
+            monolithLoad[service]++;
+            if (monolithLoad[service] >= monolithScale) {
+                document.getElementById('monolith-ordering').classList.remove('green');
+                document.getElementById('monolith-ordering').classList.add('red');
+                document.getElementById('monolith-tracking').classList.remove('green');
+                document.getElementById('monolith-tracking').classList.add('red');
+            }
+        }
+
+        function increaseScaleMonolith() {
+            monolithScale++;
+            document.getElementById("monocost").innerHTML = "Cost: Rs. " + monolithScale * 2000;
+            document.getElementById("monoscale").innerHTML = "Scale factor: " + monolithScale * 2 + " CPUs";
+            document.getElementById('monolith-ordering').classList.remove('red');
+            document.getElementById('monolith-ordering').classList.add('green');
+            document.getElementById('monolith-tracking').classList.remove('red');
+            document.getElementById('monolith-tracking').classList.add('green');
+        }
+
+        function increaseLoadMicro(service) {
+            microLoad[service]++;
+            if (microLoad[service] >= microScale[service]) {
+                document.getElementById(`micro-${service}`).classList.remove('green');
+                document.getElementById(`micro-${service}`).classList.add('red');
+            }
+        }
+
+        function increaseScaleMicro(service) {
+            microScale[service]++;
+            let finalCost = 0;
+            for (key in microScale) {
+                finalCost += microScale[key];
+            }
+            document.getElementById("microcost").innerHTML = "Cost: Rs. " + finalCost * 1000;
+            document.getElementById("microscale").innerHTML = "Scale factor: " + finalCost + " CPUs";
+            document.getElementById(`micro-${service}`).classList.remove('red');
+            document.getElementById(`micro-${service}`).classList.add('green');
+        }
+    </script>
+</body>
+</html>
