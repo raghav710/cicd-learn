@@ -1,0 +1,9 @@
+### Know these commands
+
+1. List images
+2. pull an image
+3. create a container from an image
+4. Run a container
+5. Attach to a container and viewing status of running/stopped containers
+6. Persist data from a container
+7. Cleaning up containers and images
