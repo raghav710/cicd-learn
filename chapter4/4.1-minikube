@@ -1,5 +1,0 @@
-To understand Kubernetes via Minikube we will be using the following resources
-
-* https://kubernetes.io/docs/concepts/overview/components/
-* https://minikube.sigs.k8s.io/docs/start/
-* https://medium.com/nerd-for-tech/kubernetes-declaratively-deploying-infrastructure-iac-789f14d999c6
