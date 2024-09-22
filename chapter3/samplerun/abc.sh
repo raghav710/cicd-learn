@@ -1,0 +1,1 @@
+echo "This is the TCE docker container!!!"
